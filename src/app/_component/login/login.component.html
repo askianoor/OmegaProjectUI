@@ -1,0 +1,26 @@
+<!-- HTML Login Component -->
+<div class="container" style="display: flex;justify-content: center;align-items: center;text-align:right; height: 100vh;">
+  <div class="card" style="width: 50%;">
+    <div class="card-body">
+      <h5 class="card-title">فرم ورود</h5>
+      <div class="card-text">
+        <form (ngSubmit)="login()" #form="ngForm">
+          <div class="form-group">
+            <label for="username">نام کاربری</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder=".لطفا نام کاربری خود را وارد نمایید" [(ngModel)]="model.username" required />
+          </div>
+          <div class="form-group">
+            <label for="Password">رمز عبور</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="لطفا رمز عبور خود را در اینجا وارد نمایید." [(ngModel)]="model.password" required />
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block" [disabled]="submitted || !form.valid">ورود</button>
+          </div>
+        </form>
+      </div>
+      <div class="card-text">
+        <a [routerLink]="['/register']" routerLinkActive="router-link-active">نام کاربری ندارید، همین الان ثبت نام کنید!</a>
+      </div>
+    </div>
+  </div>
+</div>
