@@ -17,6 +17,7 @@ import { DashboardComponent } from './_component/dashboard/dashboard.component';
 import { LoginComponent } from './_component/login/login.component';
 import { RegisterFormComponent } from './_component/register-form/register-form.component';
 import { UserAuditsComponent } from './_component/user-audits/user-audits.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { UserAuditsComponent } from './_component/user-audits/user-audits.compon
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    NgxPaginationModule,
     ToastrModule.forRoot({
       positionClass: 'top',
       preventDuplicates: true,

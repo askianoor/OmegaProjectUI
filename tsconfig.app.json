@@ -3,10 +3,11 @@
   "compilerOptions": {
     "outDir": "./out-tsc/app",
     "types": []
-  },    // Add to support Toastr
-  "angularCompilerOptions": {
-    "enableIvy": true
-  },
+  },    
+  // Add to support Toastr
+  // "angularCompilerOptions": {
+  //   "enableIvy": true
+  // },
   "files": [
     "src/main.ts",
     "src/polyfills.ts"

@@ -17,6 +17,7 @@ export interface UserAudits {
 export interface UserAuditsResponse {
     userAudits: UserAudits;
     fullAccess: boolean;
+    totalItem: number;
 }
 
 export interface UserProfileResponse {

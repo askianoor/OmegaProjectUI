@@ -41,7 +41,7 @@
                             </tr>  
                         </thead>  
                         <tbody>  
-                            <tr *ngFor="let item of userAudits;">  
+                            <tr *ngFor="let item of userAudits | paginate: paginationconfig">  
                                 <td>{{item.actionName}}</td>  
                                 <td>{{item.status}}</td>  
                                 <td>{{item.actionDate | date : "HH:mm:ss y/MM/dd" }}</td>
@@ -50,6 +50,19 @@
                         </tbody>  
                     </table>
                 </div>
+                <pagination-controls
+                      (pageChange)="pageChanged($event)"
+                      (pageBoundsCorrection)="pageChanged($event)"
+                      maxSize="10"
+                      directionLinks="true"
+                      autoHide="true"
+                      responsive="true"
+                      previousLabel="قبلی"
+                      nextLabel="بعدی"
+                      screenReaderPaginationLabel="صفحه بندی"
+                      screenReaderPageLabel="صفحه ی "
+                      screenReaderCurrentLabel="شما در این صفحه هستید : ">
+                </pagination-controls>
             </div>
           </div>
         </div>

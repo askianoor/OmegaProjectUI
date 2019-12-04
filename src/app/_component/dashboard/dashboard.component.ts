@@ -14,9 +14,17 @@ export class DashboardComponent implements OnInit {
   userAuditsResponse: UserAuditsResponse;
   userAudits: UserAudits;
   fullAccess = false;
+  totalItems = 0;
+  paginationconfig: any;
 
   constructor( private authService: AuthService) {
     this.userAuditsResponse = null;
+
+    this.paginationconfig = {
+      itemsPerPage: 15,
+      currentPage: 1,
+      totalItems: this.totalItems
+    };
    }
 
   ngOnInit() {
@@ -40,6 +48,7 @@ export class DashboardComponent implements OnInit {
       if (response !== null) {
       this.userAudits = response.userAudits;
       this.fullAccess = response.fullAccess;
+      this.totalItems = response.totalItem;
       }
    }, error => {
      this.authService.logout();
@@ -48,6 +57,10 @@ export class DashboardComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+  }
+
+  pageChanged(event) {
+    this.paginationconfig.currentPage = event;
   }
 
 }
