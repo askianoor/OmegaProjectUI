@@ -49,7 +49,7 @@ export class AuthService {
     return this.http
       .post<LoginResponse>(this.basePath + 'api/ApplicationUser/login', data, this.httpOptions)
       .pipe(
-        retry(2),
+        // retry(2),
         catchError(this.handleError)
       );
   }

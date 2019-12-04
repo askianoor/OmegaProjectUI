@@ -6,12 +6,17 @@ export interface LoginResponse {
     // message: string;
 }
 
-export interface UserAuditsResponse {
+export interface UserAudits {
     id: number;
     actionName: string;
     status: string;
     actionDate: Date;
     userId: string;
+}
+
+export interface UserAuditsResponse {
+    userAudits: UserAudits;
+    fullAccess: boolean;
 }
 
 export interface UserProfileResponse {

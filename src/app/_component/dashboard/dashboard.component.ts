@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../_service/auth.service';
-import { UserProfileResponse, UserAuditsResponse } from 'src/app/_models/user';
+import { UserProfileResponse, UserAuditsResponse, UserAudits } from 'src/app/_models/user';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,11 +11,13 @@ export class DashboardComponent implements OnInit {
   model: any = {};
 
   userDetails: UserProfileResponse;
-  userAudits: UserAuditsResponse;
+  userAuditsResponse: UserAuditsResponse;
+  userAudits: UserAudits;
+  fullAccess = false;
 
-  constructor(
-    private authService: AuthService
-  ) { }
+  constructor( private authService: AuthService) {
+    this.userAuditsResponse = null;
+   }
 
   ngOnInit() {
     this.getProfileData();
@@ -35,9 +37,9 @@ export class DashboardComponent implements OnInit {
 
   getAudits() {
     this.authService.getAudits().subscribe(response => {
-      if (response.actionName !== null) {
-       this.userAudits = response;
-       console.log(this.userAudits);
+      if (response !== null) {
+      this.userAudits = response.userAudits;
+      this.fullAccess = response.fullAccess;
       }
    }, error => {
      this.authService.logout();

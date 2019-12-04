@@ -2,20 +2,20 @@
 <nav class="navbar navbar-dark bg-dark">
   <a class="navbar-brand text-white">شرکت اومگا</a>
   <span class="navbar-text">
-      <!-- {{userDetails.fullname}} عزیز خوش آمدید. -->
+      {{userDetails?.fullName}} عزیز خوش آمدید.
     </span>
   <button type="button" class="float-right btn btn-outline-danger btn-sm" (click)="logout()">خروج</button>
 </nav>
 
-<div class="container text-right" *ngIf="userDetails" style="display: flex;justify-content: center;align-items: center; margin-top:20px;">
+<div class="container text-right" style="display: flex;justify-content: center;align-items: center; margin-top:20px;">
   <div class="card" style="width: 90%;">
     <div class="card-body">
       <h5 class="card-title">اطلاعات کاربری شما</h5>
       <div class="card-text">
         <div class="container">
           <div class="row">
-            <div class="col col-6"><strong>نام کاربری : </strong>{{userDetails.userName}}</div>
-            <div class="col col-6"><strong>آدرس ایمیل : </strong>{{userDetails.email}}</div>
+            <div class="col col-6"><strong>نام کاربری : </strong>{{userDetails?.userName}}</div>
+            <div class="col col-6"><strong>آدرس ایمیل : </strong>{{userDetails?.email}}</div>
           </div>
         </div>
       </div>
@@ -37,7 +37,7 @@
                                 <th>نوع عملیات</th>  
                                 <th>وضعیت عملیات</th>  
                                 <th>تاریخ عملیات</th>
-                                <th>شماره کاربری</th>  
+                                <th *ngIf="fullAccess">نام کاربری</th>  
                             </tr>  
                         </thead>  
                         <tbody>  
@@ -45,7 +45,7 @@
                                 <td>{{item.actionName}}</td>  
                                 <td>{{item.status}}</td>  
                                 <td>{{item.actionDate | date : "HH:mm:ss y/MM/dd" }}</td>
-                                <td>{{item.userId}}</td>
+                                <td *ngIf="fullAccess">{{item.userId}}</td>
                             </tr>  
                         </tbody>  
                     </table>
