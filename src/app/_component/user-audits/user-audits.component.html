@@ -1,1 +1,46 @@
-<p>user-audits works!</p>
+<div class="container text-right" style="display: flex;justify-content: center;align-items: center; margin-top:20px;">
+    <div class="card" style="width: 90%;">
+        <div class="card-body">
+        <h5 class="card-title">آخرین فعالیت ها</h5>
+        <div class="card-text">
+            <div class="container">
+            <div class="row">
+                <div class='table-responsive'>  
+                    <table class='table'>  
+                        <thead>  
+                            <tr>  
+                                <th>نوع عملیات</th>  
+                                <th>وضعیت عملیات</th>  
+                                <th>تاریخ عملیات</th>
+                                <th *ngIf="fullAccess">نام کاربری</th>  
+                            </tr>  
+                        </thead>  
+                        <tbody>  
+                            <tr *ngFor="let item of userAudits | paginate: paginationconfig">  
+                                <td>{{item.actionName}}</td>  
+                                <td>{{item.status}}</td>  
+                                <td>{{item.actionDate | date : "HH:mm:ss y/MM/dd" }}</td>
+                                <td *ngIf="fullAccess">{{item.userId}}</td>
+                            </tr>  
+                        </tbody>  
+                    </table>
+                </div>
+                <pagination-controls
+                        (pageChange)="pageChanged($event)"
+                        (pageBoundsCorrection)="pageChanged($event)"
+                        maxSize="10"
+                        directionLinks="true"
+                        autoHide="true"
+                        responsive="true"
+                        previousLabel="قبلی"
+                        nextLabel="بعدی"
+                        screenReaderPaginationLabel="صفحه بندی"
+                        screenReaderPageLabel="صفحه ی "
+                        screenReaderCurrentLabel="شما در این صفحه هستید : ">
+                </pagination-controls>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../_service/user.service';
-import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register-form',
@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 
 export class RegisterFormComponent implements OnInit {
 
-  constructor(public service: UserService, private toastr: ToastrService) { }
+  constructor(public service: UserService) { }
 
   ngOnInit() {
     this.service.formModel.reset();
@@ -21,17 +21,28 @@ export class RegisterFormComponent implements OnInit {
       (res: any) => {
         if (res.succeeded) {
           this.service.formModel.reset();
-          this.toastr.success('نام کاربری ساخته شد!', 'ثبت نام موفق آمیز بود.');
+          Swal.fire({
+            title: 'ثبت نام موفق',
+            text: 'نام کاربری شما با موفقیت ساخته شد.',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500});
         } else {
           res.errors.forEach(element => {
             switch (element.code) {
               case 'DuplicateUserName':
-                this.toastr.error('نام کاربری تکراری میباشد!', 'ثبت نام ناموفق');
-                break;
+                  Swal.fire({
+                    title: 'ثبت نام ناموفق',
+                    text: 'نام کاربری تکراری میباشد!',
+                    icon: 'error'});
+                  break;
 
               default:
-              this.toastr.error(element.description, 'ثبت نام ناموفق');
-              break;
+                  Swal.fire({
+                    title: 'ثبت نام ناموفق',
+                    text: 'سیستم قادر به ساخت نام کاربری برای شما نمی باشد!',
+                    icon: 'error'});
+                  break;
             }
           });
         }

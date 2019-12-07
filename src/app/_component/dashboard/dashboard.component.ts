@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../_service/auth.service';
-import { UserProfileResponse, UserAuditsResponse, UserAudits } from 'src/app/_models/user';
+import { UserProfileResponse } from 'src/app/_models/user';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,27 +10,12 @@ import { UserProfileResponse, UserAuditsResponse, UserAudits } from 'src/app/_mo
 })
 export class DashboardComponent implements OnInit {
   model: any = {};
-
   userDetails: UserProfileResponse;
-  userAuditsResponse: UserAuditsResponse;
-  userAudits: UserAudits;
-  fullAccess = false;
-  totalItems = 0;
-  paginationconfig: any;
 
-  constructor( private authService: AuthService) {
-    this.userAuditsResponse = null;
-
-    this.paginationconfig = {
-      itemsPerPage: 15,
-      currentPage: 1,
-      totalItems: this.totalItems
-    };
-   }
+  constructor( private authService: AuthService) {}
 
   ngOnInit() {
     this.getProfileData();
-    this.getAudits();
   }
 
   getProfileData() {
@@ -40,27 +26,14 @@ export class DashboardComponent implements OnInit {
        }
     }, error => {
       this.authService.logout();
+      Swal.fire({
+        title: 'اعتبارسنجی ناموفق',
+        text: 'توکن شما دیگر معتبر نمیباشد! لطفا دوباره وارد شوید.',
+        icon: 'error'});
     });
-  }
-
-  getAudits() {
-    this.authService.getAudits().subscribe(response => {
-      if (response !== null) {
-      this.userAudits = response.userAudits;
-      this.fullAccess = response.fullAccess;
-      this.totalItems = response.totalItem;
-      }
-   }, error => {
-     this.authService.logout();
-   });
   }
 
   logout() {
     this.authService.logout();
   }
-
-  pageChanged(event) {
-    this.paginationconfig.currentPage = event;
-  }
-
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../_service/auth.service';
-import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
   model: any = {};
 
   constructor(
-    private authService: AuthService, private toastr: ToastrService
+    private authService: AuthService // , private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -24,14 +24,18 @@ export class LoginComponent implements OnInit {
     this.authService.loginForm(this.model).subscribe(response => {
         if (response.access_token !== null ) {
         this.authService.setUser(response);
+        Swal.fire({
+          title: 'ورود موفق',
+          text: 'به پنل مدیریت حساب خوش آمدید.',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500});
       }
     }, error => {
-      this.toastr.error('نام کاربری یا رمز عبور اشتباه است.', 'اعتبارسنجی ناموفق');
-      // if (error.status === 400) {
-      //       this.toastr.error('نام کاربری یا رمز عبور اشتباه است.', 'اعتبارسنجی ناموفق');
-      //     } else {
-      //       console.log(error);
-      //     }
+      Swal.fire({
+        title: 'اعتبارسنجی ناموفق',
+        text: 'نام کاربری یا رمز عبور اشتباه است!',
+        icon: 'error'});
     });
   }
 }
