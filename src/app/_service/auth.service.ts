@@ -1,6 +1,6 @@
 // auth.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { LoginResponse, UserProfileResponse, UserAuditsResponse } from '../_models/user';
@@ -87,13 +87,23 @@ export class AuthService {
       );
   }
 
-    // Get audit data from server for Dashboard
-    getAudits(): Observable<UserAuditsResponse> {
-      return this.http
-        .get<UserAuditsResponse>(this.basePath + 'api/UserAudit')
-        .pipe(
-          retry(2),
-          catchError(this.handleError)
-        );
-    }
+  // Get audit data from server for Dashboard
+  getAudits(): Observable<UserAuditsResponse> {
+    return this.http
+      .get<UserAuditsResponse>(this.basePath + 'api/UserAudit')
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
+  }
+
+  // Get audit data from server for Dashboard
+  getFilteredData(FromDate, UntilDate): Observable<UserAuditsResponse> {
+    return this.http
+      .get<UserAuditsResponse>(this.basePath + 'api/UserAudit/getFilteredData?FromDate=' + FromDate + '&UntilDate=' + UntilDate)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      );
+  }
 }

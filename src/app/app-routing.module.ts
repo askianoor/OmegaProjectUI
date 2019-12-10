@@ -4,12 +4,13 @@ import { AuthGuard } from './_guards/auth.guard';
 import { DashboardComponent } from './_component/dashboard/dashboard.component';
 import { LoginComponent } from './_component/login/login.component';
 import { RegisterFormComponent } from './_component/register-form/register-form.component';
+import { ProfileComponent } from './_component/profile/profile.component';
 
 const routes: Routes = [
   {
     path: 'dashboard',
     canActivate: [AuthGuard],
-    component: DashboardComponent
+    component: DashboardComponent,
   },
   {
     path: 'login',

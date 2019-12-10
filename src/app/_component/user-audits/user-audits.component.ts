@@ -15,6 +15,8 @@ export class UserAuditsComponent implements OnInit {
   fullAccess = false;
   totalItems = 0;
   paginationconfig: any;
+  FromDate = ' ';
+  UntilDate = ' ';
 
   constructor(private authService: AuthService) {
     this.userAuditsResponse = null;
@@ -29,7 +31,6 @@ export class UserAuditsComponent implements OnInit {
   ngOnInit() {
     this.getAudits();
   }
-
 
   getAudits() {
     this.authService.getAudits().subscribe(response => {
@@ -49,5 +50,31 @@ export class UserAuditsComponent implements OnInit {
 
   pageChanged(event) {
     this.paginationconfig.currentPage = event;
+  }
+
+  getFilteredData() {
+    if (this.FromDate === ' ' || this.UntilDate === ' ') {
+      Swal.fire({
+        title: 'فیلتر ناموفق',
+        text: 'لطفا هر دو فیلد "از تاریخ" و "تا تاریخ" را مشخص فرمایید.',
+        icon: 'warning',
+        timer: 2500 });
+     } else {
+      const fromDate = new Date(this.FromDate);
+      const untilDate = new Date(this.UntilDate);
+      this.authService.getFilteredData(fromDate.toJSON(), untilDate.toJSON()).subscribe(response => {
+        if (response !== null) {
+        this.userAudits = response.userAudits;
+        this.fullAccess = response.fullAccess;
+        this.totalItems = response.totalItem;
+        }
+     }, error => {
+       this.authService.logout();
+       Swal.fire({
+        title: 'اعتبارسنجی ناموفق',
+        text: 'توکن شما دیگر معتبر نمیباشد! لطفا دوباره وارد شوید.',
+        icon: 'error'});
+     });
+     }
   }
 }
